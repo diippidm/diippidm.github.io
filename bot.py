@@ -1,6 +1,7 @@
 import logging
 import json
 import aiosqlite
+import asyncio
 
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.enums.content_type import ContentType
