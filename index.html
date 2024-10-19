@@ -91,45 +91,60 @@
         } 
     </style> 
      
-    <script> 
-        // Initialize the AngularJS app 
-        angular.module('custom-webapp-ui', []) 
-        .controller('CustomUIController', function CustomUIController($scope) { 
-            $scope.courses = [ 
-                { 
-                    name: 'Introduction to Python', 
-                    icon: 'code', 
-                    duration: '3 weeks', 
-                    lessons: [
-                        {title: 'Lesson 1: Getting Started with Python', description: 'Introduction to Python, installation, and first steps.', duration: '30 minutes'},
-                        {title: 'Lesson 2: Variables and Data Types', description: 'Understanding variables, types like int, float, str, and their use.', duration: '45 minutes'},
-                        {title: 'Lesson 3: Conditional Statements', description: 'If-else structures and logical operations in Python.', duration: '40 minutes'},
-                        {title: 'Lesson 4: Loops in Python', description: 'For and while loops, and iterating over collections.', duration: '1 hour'},
-                        {title: 'Lesson 5: Functions', description: 'Creating functions, parameters, and return values.', duration: '1 hour 15 minutes'},
-                        {title: 'Lesson 6: Working with Lists and Dictionaries', description: 'Understanding and manipulating Python data structures.', duration: '1 hour'},
-                        {title: 'Lesson 7: Error Handling', description: 'Try-except structures and managing errors in Python.', duration: '45 minutes'}
-                    ]
-                },
-                { name: 'Web Development Basics', icon: 'language', duration: '5 weeks' }, 
-                { name: 'Data Science Fundamentals', icon: 'analytics', duration: '6 weeks' } 
-            ]; 
-            
-            // Function to handle Start button clicks
-            $scope.startCourse = function(course) {
-                alert('Starting ' + course.name + ' course!');
-            };
-
-            // Function to display lessons of the Python course
-            $scope.showLessons = function(course) {
-                if (course.lessons) {
-                    alert('Lessons for ' + course.name + ': \n' + 
-                        course.lessons.map(lesson => lesson.title + ' - ' + lesson.duration).join('\n'));
-                } else {
-                    alert('No lessons available for this course.');
-                }
-            };
-        }); 
-    </script> 
+    <script>  
+    // Initialize the AngularJS app  
+    angular.module('custom-webapp-ui', [])  
+    .controller('CustomUIController', function CustomUIController($scope) {  
+        $scope.courses = [  
+            {  
+                name: 'Introduction to Python',  
+                icon: 'code',  
+                duration: '3 weeks',  
+                lessons: [ 
+                    {title: 'Lesson 1: Getting Started with Python', description: 'Introduction to Python, installation, and first steps.', duration: '30 minutes'}, 
+                    {title: 'Lesson 2: Variables and Data Types', description: 'Understanding variables, types like int, float, str, and their use.', duration: '45 minutes'}, 
+                    {title: 'Lesson 3: Conditional Statements', description: 'If-else structures and logical operations in Python.', duration: '40 minutes'}, 
+                    {title: 'Lesson 4: Loops in Python', description: 'For and while loops, and iterating over collections.', duration: '1 hour'}, 
+                    {title: 'Lesson 5: Functions', description: 'Creating functions, parameters, and return values.', duration: '1 hour 15 minutes'}, 
+                    {title: 'Lesson 6: Working with Lists and Dictionaries', description: 'Understanding and manipulating Python data structures.', duration: '1 hour'}, 
+                    {title: 'Lesson 7: Error Handling', description: 'Try-except structures and managing errors in Python.', duration: '45 minutes'} 
+                ],
+                youtubeLink: 'https://www.youtube.com/watch?v=rfscVS0vtbw' // Python course link
+            }, 
+            {  
+                name: 'Web Development Basics',  
+                icon: 'language',  
+                duration: '5 weeks',  
+                youtubeLink: 'https://www.youtube.com/watch?v=UB1O30fR-EE' // Web development link
+            },  
+            {  
+                name: 'Data Science Fundamentals',  
+                icon: 'analytics',  
+                duration: '6 weeks',  
+                youtubeLink: 'https://www.youtube.com/watch?v=ua-CiDNNj30' // Data science link
+            }  
+        ];  
+         
+        // Function to handle Start button clicks and redirect to YouTube  
+        $scope.startCourse = function(course) {  
+            if (course.youtubeLink) {  
+                window.open(course.youtubeLink, '_blank');  
+            } else {  
+                alert('No link available for this course.');  
+            }  
+        };  
+  
+        // Function to display lessons of the Python course  
+        $scope.showLessons = function(course) {  
+            if (course.lessons) {  
+                alert('Lessons for ' + course.name + ': \n' +  
+                    course.lessons.map(lesson => lesson.title + ' - ' + lesson.duration).join('\n'));  
+            } else {  
+                alert('No lessons available for this course.');  
+            }  
+        };  
+    });  
+</script>
 </head> 
  
 <body ng-controller="CustomUIController"> 
