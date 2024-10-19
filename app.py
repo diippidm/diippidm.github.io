@@ -9,7 +9,7 @@ async def launch_web_ui(update: Update, callback: CallbackContext):
     kb = [
         [KeyboardButton(
             "Show me my Web-App!", 
-           web_app=WebAppInfo("https://olzhasSanatbek.github.io/") # obviously, set yours here.
+           web_app=WebAppInfo("https://diippdim.github.io/") # obviously, set yours here.
         )]
     ]
     await update.message.reply_text("Let's do this...", reply_markup=ReplyKeyboardMarkup(kb))
