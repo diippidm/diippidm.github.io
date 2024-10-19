@@ -8,7 +8,7 @@ application = ApplicationBuilder().token(BOT_TOKEN).build()
 
 async def launch_web_ui(update: Update, callback: CallbackContext):
     kb = [
-        [KeyboardButton("Show me my Web-App!", web_app=WebAppInfo("https://diippdm.github.io/"))]
+        [KeyboardButton("Show me my Web-App!", web_app=WebAppInfo("https://diippidm.github.io/"))]
     ]
     await update.message.reply_text("Let's do this...", reply_markup=ReplyKeyboardMarkup(kb))
 
