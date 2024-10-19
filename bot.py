@@ -16,11 +16,11 @@ dp = Dispatcher()
 
 @dp.message(Command("Start"))
 async def send_welcome(message: types.Message):
-    keyboard = types.InlineKeyboardMarkup(inline_keyboard=[])
+    keyboard = types.InlineKeyboardMarkup()
 
     button = types.InlineKeyboardButton("Начать обучение", url="https://diippidm.github.io/")
-    keyboard.inline_keyboard.append([button])
-
+    keyboard.add(button)
+    
     photo_url = "https://www.upload.ee/image/17277134/photo1.jpg"
 
     # Добавляем пользователя в базу данных
