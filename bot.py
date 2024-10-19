@@ -10,12 +10,9 @@ from aiogram.filters import Command
 
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot("7844429997:AAGxJw2wcBiR4ngCV6hTkSKQxL1qGv5449o")
-dp = Dispatcher()
-
 @dp.message(Command("start"))
 async def send_welcome(message: types.Message):
-    photo_url = 'URL_вашего_фото'  # Specify your image URL here
+    photo_url = 'https://www.upload.ee/image/17277134/photo1.jpg'  # Укажите URL изображения
     keyboard = types.InlineKeyboardMarkup(row_width=1)
     keyboard.add(types.InlineKeyboardButton("Начать обучение", url='https://diippidm.github.io/'))
 
@@ -34,10 +31,10 @@ async def send_welcome(message: types.Message):
 
 async def main():
     await dp.start_polling()
-    
-if __name__ == '__main__':
-      asyncio.run(main())
 
+if __name__ == '__main__':
+    asyncio.run(main())
+    
 async def add_user(user_id, username, first_name, last_name):
     try:
         async with aiosqlite.connect('bot_database.db') as db:
