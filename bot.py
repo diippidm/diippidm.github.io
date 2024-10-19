@@ -6,7 +6,6 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.enums.content_type import ContentType
 from aiogram.enums.parse_mode import ParseMode
 from aiogram.filters import Command
-from aiogram.utils import executor
 
 logging.basicConfig(level=logging.INFO)
 
@@ -32,8 +31,11 @@ async def send_welcome(message: types.Message):
         reply_markup=keyboard
     )
 
+async def main():
+    await dp.start_polling()
+    
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+      asyncio.run(main())
 
 async def add_user(user_id, username, first_name, last_name):
     try:
