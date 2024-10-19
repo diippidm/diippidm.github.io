@@ -1,169 +1,187 @@
-<!DOCTYPE html> 
-<html ng-app="custom-webapp-ui" lang="en"> 
-<head> 
-    <!-- Load the Telegram Library --> 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script> 
-     
-    <!-- Load the AngularJS Library --> 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script> 
-     
-    <!-- Load Google Icons --> 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
-     
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Telegram Mini App</title> 
- 
-    <style> 
-        body { 
-            font-family: 'Roboto', sans-serif; 
-            background-color: #f4f7fa; 
-            margin: 0; 
-            padding: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-        } 
- 
-        .container { 
-            width: 100%; 
-            max-width: 600px; 
-            background-color: #ffffff; 
-            border-radius: 10px; 
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); 
-            padding: 20px; 
-        } 
- 
-        h1 { 
-            font-size: 24px; 
-            text-align: center; 
-            color: #0a74da; 
-            margin-bottom: 20px; 
-        } 
- 
-        .course-list { 
-            list-style: none; 
-            padding: 0; 
-            margin: 0; 
-        } 
- 
-        .course-item { 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            padding: 15px; 
-            border-bottom: 1px solid #e1e1e1; 
-        } 
- 
-        .course-item:last-child { 
-            border-bottom: none; 
-        } 
- 
-        .course-title { 
-            display: flex; 
-            align-items: center; 
-        } 
- 
-        .course-title .material-icons { 
-            font-size: 24px; 
-            color: #0a74da; 
-            margin-right: 10px; 
-        } 
- 
-        .course-info { 
-            font-size: 14px; 
-            color: #555; 
-        } 
- 
-        .start-button { 
-            background-color: #0a74da; 
-            color: #fff; 
-            padding: 8px 15px; 
-            border: none; 
-            border-radius: 5px; 
-            cursor: pointer; 
-            transition: background-color 0.3s ease; 
-        } 
- 
-        .start-button:hover { 
-            background-color: #084f9b; 
-        } 
-    </style> 
-     
-    <script>  
-    // Initialize the AngularJS app  
-    angular.module('custom-webapp-ui', [])  
-    .controller('CustomUIController', function CustomUIController($scope) {  
-        $scope.courses = [  
-            {  
-                name: 'Introduction to Python',  
-                icon: 'code',  
-                duration: '3 weeks',  
-                lessons: [ 
-                    {title: 'Lesson 1: Getting Started with Python', description: 'Introduction to Python, installation, and first steps.', duration: '30 minutes'}, 
-                    {title: 'Lesson 2: Variables and Data Types', description: 'Understanding variables, types like int, float, str, and their use.', duration: '45 minutes'}, 
-                    {title: 'Lesson 3: Conditional Statements', description: 'If-else structures and logical operations in Python.', duration: '40 minutes'}, 
-                    {title: 'Lesson 4: Loops in Python', description: 'For and while loops, and iterating over collections.', duration: '1 hour'}, 
-                    {title: 'Lesson 5: Functions', description: 'Creating functions, parameters, and return values.', duration: '1 hour 15 minutes'}, 
-                    {title: 'Lesson 6: Working with Lists and Dictionaries', description: 'Understanding and manipulating Python data structures.', duration: '1 hour'}, 
-                    {title: 'Lesson 7: Error Handling', description: 'Try-except structures and managing errors in Python.', duration: '45 minutes'} 
-                ],
-                youtubeLink: 'https://www.youtube.com/watch?v=rfscVS0vtbw' // Python course link
-            }, 
-            {  
-                name: 'Web Development Basics',  
-                icon: 'language',  
-                duration: '5 weeks',  
-                youtubeLink: 'https://www.youtube.com/watch?v=UB1O30fR-EE' // Web development link
-            },  
-            {  
-                name: 'Data Science Fundamentals',  
-                icon: 'analytics',  
-                duration: '6 weeks',  
-                youtubeLink: 'https://www.youtube.com/watch?v=ua-CiDNNj30' // Data science link
-            }  
-        ];  
-         
-        // Function to handle Start button clicks and redirect to YouTube  
-        $scope.startCourse = function(course) {  
-            if (course.youtubeLink) {  
-                window.open(course.youtubeLink, '_blank');  
-            } else {  
-                alert('No link available for this course.');  
-            }  
-        };  
+<!DOCTYPE html>  
+<html ng-app="custom-webapp-ui" lang="en">  
+<head>  
+    <!-- Load the Telegram Library -->  
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>  
+      
+    <!-- Load the AngularJS Library -->  
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>  
+      
+    <!-- Load Google Icons -->  
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
+      
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Telegram Mini App</title>  
   
-        // Function to display lessons of the Python course  
-        $scope.showLessons = function(course) {  
-            if (course.lessons) {  
-                alert('Lessons for ' + course.name + ': \n' +  
-                    course.lessons.map(lesson => lesson.title + ' - ' + lesson.duration).join('\n'));  
-            } else {  
-                alert('No lessons available for this course.');  
-            }  
-        };  
-    });  
-</script>
-</head> 
- 
-<body ng-controller="CustomUIController"> 
-    <div class="container"> 
-        <h1>Available Courses</h1> 
-        <ul class="course-list"> 
-            <li class="course-item" ng-repeat="course in courses"> 
-                <div class="course-title"> 
-                    <i class="material-icons">{{course.icon}}</i> 
-                    <div> 
-                        <div>{{course.name}}</div> 
-                        <div class="course-info">Duration: {{course.duration}}</div> 
-                    </div> 
-                </div> 
-                <button class="start-button" ng-click="showLessons(course)">View Lessons</button> 
-                <button class="start-button" ng-click="startCourse(course)">Start</button> 
-            </li> 
-        </ul> 
-    </div> 
-</body> 
+    <style>  
+        body {  
+            font-family: 'Roboto', sans-serif;  
+            background-color: #f4f7fa;  
+            margin: 0;  
+            padding: 0;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            height: 100vh;  
+        }  
+  
+        .container {  
+            width: 100%;  
+            max-width: 600px;  
+            background-color: #ffffff;  
+            border-radius: 10px;  
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);  
+            padding: 20px;  
+        }  
+  
+        h1 {  
+            font-size: 24px;  
+            text-align: center;  
+            color: #0a74da;  
+            margin-bottom: 20px;  
+        }  
+  
+        .course-list {  
+            list-style: none;  
+            padding: 0;  
+            margin: 0;  
+        }  
+  
+        .course-item {  
+            display: flex;  
+            align-items: center;  
+            justify-content: space-between;  
+            padding: 15px;  
+            border-bottom: 1px solid #e1e1e1;  
+        }  
+  
+        .course-item:last-child {  
+            border-bottom: none;  
+        }  
+  
+        .course-title {  
+            display: flex;  
+            align-items: center;  
+        }  
+  
+        .course-title .material-icons {  
+            font-size: 24px;  
+            color: #0a74da;  
+            margin-right: 10px;  
+        }  
+  
+        .course-info {  
+            font-size: 14px;  
+            color: #555;  
+        }  
+  
+        .start-button {  
+            background-color: #0a74da;  
+            color: #fff;  
+            padding: 8px 15px;  
+            border: none;  
+            border-radius: 5px;  
+            cursor: pointer;  
+            transition: background-color 0.3s ease;  
+        }  
+  
+        .start-button:hover {  
+            background-color: #084f9b;  
+        }  
+  
+        .profile-button {  
+            background-color: #4caf50;  
+            color: #fff;  
+            padding: 10px 20px;  
+            border: none;  
+            border-radius: 5px;  
+            cursor: pointer;  
+            text-align: center;  
+            display: block;  
+            width: 100%;  
+            margin-top: 20px;  
+            font-size: 16px;  
+        }  
+  
+        .profile-button:hover {  
+            background-color: #388e3c;  
+        }  
+    </style>  
+      
+    <script>  
+        // Initialize the AngularJS app  
+        angular.module('custom-webapp-ui', [])  
+        .controller('CustomUIController', function CustomUIController($scope) {  
+            $scope.courses = [  
+                {  
+                    name: 'Introduction to Python',  
+                    icon: 'code',  
+                    duration: '3 weeks',  
+                    youtubeLink: 'https://www.youtube.com/watch?v=rfscVS0vtbw'  
+                },  
+                {  
+                    name: 'Web Development Basics',  
+                    icon: 'language',  
+                    duration: '5 weeks',  
+                    youtubeLink: 'https://www.youtube.com/watch?v=UB1O30fR-EE'  
+                },  
+                {  
+                    name: 'Data Science Fundamentals',  
+                    icon: 'analytics',  
+                    duration: '6 weeks',  
+                    youtubeLink: 'https://www.youtube.com/watch?v=ua-CiDNNj30'  
+                }  
+            ];
+// Function to handle Start button clicks and redirect to YouTube  
+$scope.startCourse = function(course) {  
+                if (course.youtubeLink) {  
+                    window.open(course.youtubeLink, '_blank');  
+                } else {  
+                    alert('No link available for this course.');  
+                }  
+            };  
+  
+            // Function to display lessons of the Python course  
+            $scope.showLessons = function(course) {  
+                if (course.lessons) {  
+                    alert('Lessons for ' + course.name + ': \n' +  
+                        course.lessons.map(lesson => lesson.title + ' - ' + lesson.duration).join('\n'));  
+                } else {  
+                    alert('No lessons available for this course.');  
+                }  
+            };  
+  
+            // Function to handle Profile button click  
+            $scope.goToProfile = function() {  
+                alert('Redirecting to your profile...');  
+                // Here you could redirect to a profile page or handle a profile-related action
+                // window.open('/profile', '_blank'); // Example redirection
+            };  
+        });  
+    </script>  
+</head>  
+  
+<body ng-controller="CustomUIController">  
+    <div class="container">  
+        <h1>Available Courses</h1>  
+        <ul class="course-list">  
+            <li class="course-item" ng-repeat="course in courses">  
+                <div class="course-title">  
+                    <i class="material-icons">{{course.icon}}</i>  
+                    <div>  
+                        <div>{{course.name}}</div>  
+                        <div class="course-info">Duration: {{course.duration}}</div>  
+                    </div>  
+                </div>  
+                <button class="start-button" ng-click="showLessons(course)">View Lessons</button>  
+                <button class="start-button" ng-click="startCourse(course)">Start</button>  
+            </li>  
+        </ul>  
+  
+        <!-- Profile Button -->  
+        <button class="profile-button" ng-click="goToProfile()">Go to Profile</button>  
+    </div>  
+</body>  
 </html>
 
