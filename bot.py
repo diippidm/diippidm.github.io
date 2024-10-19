@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot("7844429997:AAGxJw2wcBiR4ngCV6hTkSKQxL1qGv5449o")
 dp = Dispatcher()
 
-@dp.message(CommandStart())
+#@dp.message(CommandStart())
 async def start(message: types.Message):
     photo_url = "https://www.upload.ee/image/17277134/photo1.jpg"
     
@@ -20,7 +20,7 @@ async def start(message: types.Message):
     await add_user(message.from_user.id, message.from_user.username, message.from_user.first_name, message.from_user.last_name)
     
 from aiogram import types
-
+@dp.message_handler(commands=['start'])
 async def send_welcome(message: types.Message):
     photo_url = 'https://www.upload.ee/image/17277134/photo1.jpg'  # Укажите URL изображения
     keyboard = types.InlineKeyboardMarkup(row_width=1)
