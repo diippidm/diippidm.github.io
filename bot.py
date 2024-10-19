@@ -1,52 +1,66 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import CommandHandler, MessageHandler, filters, ApplicationBuilder, CallbackQueryHandler, CallbackContext
+import logging
+import json
+import aiosqlite
 
-# Функция для обработки команды /start
-async def start(update: Update, context: CallbackContext) -> None:
-    # Создаем кнопки для взаимодействия
-    keyboard = [
-        [InlineKeyboardButton("Запустить мини-приложение", callback_data='launch_miniapp')],
-        [InlineKeyboardButton("Помощь", callback_data='help')],
-    ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text('Привет! Выберите опцию:', reply_markup=reply_markup)
+from aiogram import Bot, Dispatcher, types, F
+from aiogram.enums.content_type import ContentType
+from aiogram.filters import CommandStart
+from aiogram.enums.parse_mode import ParseMode
 
-# Функция для обработки команды /help
-async def help_command(update: Update, context: CallbackContext) -> None:
-    await update.message.reply_text("Я могу помочь вам запустить мини-приложение или ответить на ваши вопросы.")
+logging.basicConfig(level=logging.INFO)
 
-# Функция для обработки текстовых сообщений
-async def echo(update: Update, context: CallbackContext) -> None:
-    await update.message.reply_text(f"Вы написали: {update.message.text}")
+bot = Bot("7844429997:AAGxJw2wcBiR4ngCV6hTkSKQxL1qGv5449o")
+dp = Dispatcher()
 
-# Функция для обработки нажатий на кнопки
-async def button_handler(update: Update, context: CallbackContext) -> None:
-    query = update.callback_query
-    await query.answer()
+@dp.message(CommandStart())
+async def start(message: types.Message):
+    photo_url = "https://www.upload.ee/image/17277134/photo1.jpg"
     
-    # Проверяем, какую кнопку нажал пользователь
-    if query.data == 'launch_miniapp':
-        # Если выбрали запуск мини-приложения
-        await query.edit_message_text(text="Мини-приложение запущено!")
-        # Здесь можно добавить дополнительную логику для запуска мини-приложения
-    elif query.data == 'help':
-        await query.edit_message_text(text="Для запуска приложения нажмите 'Запустить мини-приложение'.")
+    # Добавляем пользователя в базу данных
+    await add_user(message.from_user.id, message.from_user.username, message.from_user.first_name, message.from_user.last_name)
+    
+    # Отправка приветственного сообщения с фото без кнопки
+    await message.answer_photo(
+        photo=photo_url,
+        caption="Привет! 👋 Добро пожаловать в нашего бота, созданного для обучения в онлайн! Здесь вы сможете:\n\n"
+                "1. Начать обучение 📚 — Откройте для себя увлекательные курсы и уроки по различным темам.\n"
+                "2. Задать вопрос ❓ — Если у вас возникли вопросы по курсам или обучению, не стесняйтесь спрашивать!\n"
+                "3. Посмотреть прогресс 📈 — Узнайте, как продвигается ваше обучение и какие задания еще предстоит выполнить.\n\n"
+                "Нажмите на кнопку ниже, чтобы начать свое обучение!"
+    )
 
-def main():
-    # Вставь сюда токен своего бота
-    TELEGRAM_TOKEN = '8116965156:AAGb9sdlIRqV2WbTJEETIyOSRPgYFAwM8HY'
-    
-    # Создаем приложение бота
-    application = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
-    
-    # Устанавливаем обработчики команд и кнопок
-    application.add_handler(CommandHandler("start", start))
-    application.add_handler(CommandHandler("help", help_command))
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
-    application.add_handler(CallbackQueryHandler(button_handler))
-    
-    # Запуск бота
-    application.run_polling()
+async def add_user(user_id, username, first_name, last_name):
+    try:
+        async with aiosqlite.connect('bot_database.db') as db:
+            await db.execute('''
+                INSERT OR IGNORE INTO users (id, username, first_name, last_name)
+                VALUES (?, ?, ?, ?)
+            ''', (user_id, username, first_name, last_name))
+            await db.commit()
+    except Exception as e:
+        print(f"Ошибка при добавлении пользователя: {e}")
 
-if __name__ == '__main__':
-    main()
+@dp.message(F.content_type == ContentType.WEB_APP_DATA)
+async def parse_data(message: types.Message):
+    data = json.loads(message.web_app_data.data)
+    await message.answer(f'<b>{data["title"]}</b>\n\n<code>{data["desc"]}</code>\n\n{data["text"]}', parse_mode=ParseMode.HTML)
+
+async def setup_db():
+    async with aiosqlite.connect('bot_database.db') as db:
+        await db.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY,
+                username TEXT,
+                first_name TEXT,
+                last_name TEXT
+            )
+        ''')
+        await db.commit()
+
+async def main():
+    await setup_db()
+    await dp.start_polling(bot)
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())
