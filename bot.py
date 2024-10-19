@@ -9,7 +9,7 @@ from aiogram.enums.parse_mode import ParseMode
 
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot("8116965156:AAGb9sdlIRqV2WbTJEETIyOSRPgYFAwM8HY")
+bot = Bot("7844429997:AAGxJw2wcBiR4ngCV6hTkSKQxL1qGv5449o")
 dp = Dispatcher()
 
 @dp.message(CommandStart())
