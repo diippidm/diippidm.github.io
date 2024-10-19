@@ -4,7 +4,7 @@ import aiosqlite
 
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.enums.content_type import ContentType
-from aiogram.filters import CommandStart
+from aiogram.filters import Command
 from aiogram.enums.parse_mode import ParseMode
 
 logging.basicConfig(level=logging.INFO)
