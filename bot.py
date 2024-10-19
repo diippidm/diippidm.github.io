@@ -4,27 +4,23 @@ import aiosqlite
 
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.enums.content_type import ContentType
-from aiogram.filters import Command
 from aiogram.enums.parse_mode import ParseMode
+from aiogram.filters import Command
+from aiogram.utils import executor
 
 logging.basicConfig(level=logging.INFO)
 
 bot = Bot("7844429997:AAGxJw2wcBiR4ngCV6hTkSKQxL1qGv5449o")
 dp = Dispatcher()
 
-#@dp.message(CommandStart())
-async def start(message: types.Message):
-    photo_url = "https://www.upload.ee/image/17277134/photo1.jpg"
-    
-    # Добавляем пользователя в базу данных
-    await add_user(message.from_user.id, message.from_user.username, message.from_user.first_name, message.from_user.last_name)
-    
-from aiogram import types
-@dp.message_handler(commands=['start'])
+@dp.message(Command("start"))
 async def send_welcome(message: types.Message):
-    photo_url = 'https://www.upload.ee/image/17277134/photo1.jpg'  # Укажите URL изображения
+    photo_url = 'URL_вашего_фото'  # Specify your image URL here
     keyboard = types.InlineKeyboardMarkup(row_width=1)
     keyboard.add(types.InlineKeyboardButton("Начать обучение", url='https://diippidm.github.io/'))
+
+     # Добавляем пользователя в базу данных
+    await add_user(message.from_user.id, message.from_user.username, message.from_user.first_name, message.from_user.last_name)
 
     await message.answer_photo(
         photo=photo_url,
@@ -35,6 +31,9 @@ async def send_welcome(message: types.Message):
                 "Нажмите на кнопку ниже, чтобы начать свое обучение!",
         reply_markup=keyboard
     )
+
+if __name__ == '__main__':
+    executor.start_polling(dp, skip_updates=True)
 
 async def add_user(user_id, username, first_name, last_name):
     try:
