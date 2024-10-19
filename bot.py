@@ -14,10 +14,8 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot("7844429997:AAGxJw2wcBiR4ngCV6hTkSKQxL1qGv5449o")
 dp = Dispatcher()
 
-
-
-@dp.message(CommandStart())
-async def start(message: types.Message):
+@dp.message(Command("Start"))
+async def send_welcome(message: types.Message):
     keyboard = types.InlineKeyboardMarkup()
     keyboard.add(types.InlineKeyboardButton("Начать обучение", url="https://diippidm.github.io/"))
     photo_url = "https://www.upload.ee/image/17277134/photo1.jpg"
@@ -32,8 +30,7 @@ async def start(message: types.Message):
                 "1. Начать обучение 📚 — Откройте для себя увлекательные курсы и уроки по различным темам.\n"
                 "2. Задать вопрос ❓ — Если у вас возникли вопросы по курсам или обучению, не стесняйтесь спрашивать!\n"
                 "3. Посмотреть прогресс 📈 — Узнайте, как продвигается ваше обучение и какие задания еще предстоит выполнить.\n\n"
-                "Нажмите на кнопку ниже, чтобы начать свое обучение!", reply_markup=keyboard
-    )
+                "Нажмите на кнопку ниже, чтобы начать свое обучение!", reply_markup=keyboard)
 
 async def add_user(user_id, username, first_name, last_name):
     try:
